@@ -48,14 +48,17 @@ export class Product {
   // @Column('int', { name: 'product_extra_price' })
   // product_extra_price: number;
 
-  @Column('char', { name: 'product_category' })
+  @Column('varchar', { name: 'product_category' })
   product_category: string;
 
   @Column('char', { name: 'product_use_yn' })
   product_use_yn: ProductStatus;
 
-  @Column('char', { name: 'product_keyword' })
+  @Column('varchar', { name: 'product_keyword' })
   product_keyword: string;
+
+  @Column('varchar', { name: 'product_method' })
+  product_method: string;
 
   @CreateDateColumn({
     name: 'created_at',
