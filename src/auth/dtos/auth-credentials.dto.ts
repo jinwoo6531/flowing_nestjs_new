@@ -13,24 +13,29 @@ export class AuthCredentialsDto {
   @IsNotEmpty()
   store_phone_number: string;
 
-  @IsDecimal()
+  // @IsDecimal()
+  @IsNotEmpty()
   store_longitude: string;
 
-  @IsDecimal()
+  // @IsDecimal()
+  @IsNotEmpty()
   store_latitude: string;
 
-  @IsString()
+  // @IsString()
+  @IsNotEmpty()
   store_business_hour: string;
 
   @IsNotEmpty()
-  store_grade: number;
+  store_grade: string;
 
-  @IsString()
-  store_image: string;
+  //   @IsString()
+  //   store_image: string;
 
-  @IsString()
+  // @IsString()
+  @IsNotEmpty()
   store_profile_image: string;
 
-  @IsString()
+  // @IsString()
+  @IsNotEmpty()
   store_closed_day: string;
 }

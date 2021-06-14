@@ -2,35 +2,53 @@ import { EntityRepository, Repository } from 'typeorm';
 import { AuthCredentialsDto } from './dtos/auth-credentials.dto';
 import { Store } from './entities/store.entity';
 import * as bcrypt from 'bcryptjs';
+import {
+  ConflictException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 
 @EntityRepository(Store)
 export class StoresRepository extends Repository<Store> {
   async crateStore(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-//     const store = new Store();
-//     store.store_name = authCredentialsDto.store_name;
-//     store.salt = await bcrypt.genSalt();
-//     store.store_password = await this.hashPassword(
-//       createStoreDto.store_password,
-//       store.salt,
-//     );
-//     store.store_address = createStoreDto.store_address;
-//     store.store_phone_number = createStoreDto.store_phone_number;
-//     store.store_longitude = createStoreDto.store_longitude;
-//     store.store_latitude = createStoreDto.store_latitude;
-//     store.store_business_hour = createStoreDto.store_business_hour;
-//     store.store_grade = createStoreDto.store_grade;
-//     store.store_image = createStoreDto.store_image;
-//     store.store_profile_image = createStoreDto.store_profile_image;
-//     store.store_closed_day = createStoreDto.store_closed_day;
+    const {
+      store_name,
+      store_password,
+      store_address,
+      store_phone_number,
+      store_longitude,
+      store_latitude,
+      store_business_hour,
+      store_grade,
+      store_profile_image,
+      store_closed_day,
+    } = authCredentialsDto;
 
-//     try {
-//       await store.save();
-//     } catch (error) {
-//       if (error.code === '23505') {
-//         throw new ConflictException('이미 존재하는 스토어명입니다.');
-//       } else {
-//         throw new InternalServerErrorException();
-//       }
-//     }
-//   }
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(store_password, salt);
+
+    const store = this.create({
+      store_name,
+      store_password: hashedPassword,
+      store_address,
+      store_phone_number,
+      store_longitude,
+      store_latitude,
+      store_business_hour,
+      store_grade,
+      store_profile_image,
+      store_closed_day,
+    });
+
+    try {
+      await this.save(store);
+    } catch (error) {
+      console.log(error);
+
+      if (error.code === '23505') {
+        throw new ConflictException('이미 존재하는 스토어입니다.');
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
+  }
 }

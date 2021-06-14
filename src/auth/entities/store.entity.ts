@@ -19,8 +19,8 @@ export class Store {
   @Column('varchar', { name: 'store_password' })
   store_password: string;
 
-  @Column()
-  salt: string;
+  //   @Column()
+  //   salt: string;
 
   @Column('varchar', { name: 'store_address' })
   store_address: string;
@@ -37,11 +37,11 @@ export class Store {
   @Column('varchar', { name: 'store_business_hour' })
   store_business_hour: string;
 
-  @Column('int', { name: 'store_grade' })
-  store_grade: number;
+  @Column('varchar', { name: 'store_grade' })
+  store_grade: string;
 
-  @Column('varchar', { name: 'store_image' })
-  store_image: string;
+  //   @Column('varchar', { name: 'store_image' })
+  //   store_image: string;
 
   @Column('varchar', { name: 'store_profile_image' })
   store_profile_image: string;
@@ -64,8 +64,8 @@ export class Store {
   //   })
   //   products: Product[];
 
-  async validatePassword(password: string): Promise<boolean> {
-    const hash = await bcrypt.hash(password, this.salt);
-    return hash === this.store_password;
-  }
+  //   async validatePassword(password: string): Promise<boolean> {
+  //     const hash = await bcrypt.hash(password, this.salt);
+  //     return hash === this.store_password;
+  //   }
 }
