@@ -45,6 +45,7 @@ export class ProductRepository extends Repository<Product> {
     const { useYn } = filterDto;
 
     //product엔티티 참조
+    //복습
     const query = this.createQueryBuilder('product');
 
     if (useYn) {
