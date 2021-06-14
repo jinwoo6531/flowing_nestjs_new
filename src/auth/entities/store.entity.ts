@@ -2,10 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { Product } from 'src/products/entities/product.entity';
 
 @Entity({ name: 'store' })
 @Unique(['store_name'])
@@ -58,6 +60,11 @@ export class Store {
     name: 'modified_at',
   })
   modified_at: Date;
+
+  @OneToMany((_type) => Product, (product) => product.store, {
+    eager: true,
+  })
+  products: Product[];
 
   //   @OneToMany((_type) => Product, (product) => product.store, {
   //     eager: true,

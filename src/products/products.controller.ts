@@ -7,14 +7,17 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ProductCreateDto } from './dtos/product.create.dto';
 import { GetProductFilterDto } from './dtos/product.filter.dto';
 import { Product } from './entities/product.entity';
 import { ProductsService } from './products.service';
 
 @Controller('products')
+@UseGuards(AuthGuard())
 export class ProductsController {
   constructor(private productService: ProductsService) {}
 
