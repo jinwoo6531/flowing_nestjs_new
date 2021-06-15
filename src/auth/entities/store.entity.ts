@@ -66,11 +66,6 @@ export class Store {
   })
   products: Product[];
 
-  //   @OneToMany((_type) => Product, (product) => product.store, {
-  //     eager: true,
-  //   })
-  //   products: Product[];
-
   //   async validatePassword(password: string): Promise<boolean> {
   //     const hash = await bcrypt.hash(password, this.salt);
   //     return hash === this.store_password;

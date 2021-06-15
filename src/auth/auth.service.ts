@@ -1,3 +1,4 @@
+import { SignInDto } from './dtos/signin.dto';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthCredentialsDto } from './dtos/auth-credentials.dto';
@@ -18,10 +19,8 @@ export class AuthService {
     return this.storesRepository.crateStore(authCredentialsDto);
   }
 
-  async signIn(
-    authCredentialsDto: AuthCredentialsDto,
-  ): Promise<{ accessToken: string }> {
-    const { store_name, store_password } = authCredentialsDto;
+  async signIn(signInDto: SignInDto): Promise<{ accessToken: string }> {
+    const { store_name, store_password } = signInDto;
     const store = await this.storesRepository.findOne({ store_name });
 
     if (store && (await bcrypt.compare(store_password, store.store_password))) {

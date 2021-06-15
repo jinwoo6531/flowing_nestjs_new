@@ -1,5 +1,5 @@
-//import { Review } from 'src/review/models/review.entity';
-
+import { Exclude } from 'class-transformer';
+import { Store } from 'src/auth/entities/store.entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,7 +8,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ProductStatus } from '../product.enum';
-// import { User } from './user.entity';
 
 @Entity({ name: 'product' })
 export class Product {
@@ -70,6 +69,7 @@ export class Product {
   })
   modified_at: Date;
 
-  //   @ManyToOne((type) => User, (user) => user.products, { eager: false })
-  //   user: User;
+  @ManyToOne((_type) => Store, (store) => store.products, { eager: false })
+  @Exclude({ toPlainOnly: true })
+  store: Store;
 }
