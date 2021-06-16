@@ -4,19 +4,27 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: [`.env.stage.${process.env.STAGE}`],
+    }),
     ProductsModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '1234',
-      database: 'flowing-seller-test',
-      autoLoadEntities: true,
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        type: 'mysql',
+        autoLoadEntities: true,
+        synchronize: true,
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USER'),
+        password: configService.get('DB_PASS'),
+        database: configService.get('DB_SCHEMA'),
+      }),
     }),
     AuthModule,
   ],
