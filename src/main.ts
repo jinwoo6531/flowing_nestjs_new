@@ -9,7 +9,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
-  const port = 3000;
+  app.enableCors({
+    origin: 'http://localhost:3000', //web배포후 수정하기
+    credentials: true,
+  });
+  const port = 3065;
   await app.listen(port);
   logger.log(`Application listening on port ${port}`);
 }

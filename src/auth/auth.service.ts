@@ -19,14 +19,20 @@ export class AuthService {
     return this.storesRepository.crateStore(authCredentialsDto);
   }
 
-  async signIn(signInDto: SignInDto): Promise<{ accessToken: string }> {
+  async signIn(
+    signInDto: SignInDto,
+  ): Promise<{ accessToken: string; store_name: string; isLoggedIn: boolean }> {
     const { store_name, store_password } = signInDto;
     const store = await this.storesRepository.findOne({ store_name });
 
     if (store && (await bcrypt.compare(store_password, store.store_password))) {
       const payload: JwtPayload = { store_name };
       const accessToken: string = await this.jwtService.sign(payload);
-      return { accessToken };
+      return {
+        accessToken,
+        store_name,
+        isLoggedIn: true,
+      };
     } else {
       throw new UnauthorizedException('Please check your login credentials');
     }
