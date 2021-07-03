@@ -46,7 +46,7 @@ export class ProductRepository extends Repository<Product> {
     await this.save(product);
     return product;
   }
-  //asd
+
   async getProducts(
     filterDto: GetProductFilterDto,
     store: Store,
