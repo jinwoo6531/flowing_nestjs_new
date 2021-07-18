@@ -53,7 +53,6 @@ export class ProductRepository extends Repository<Product> {
   ): Promise<Product[]> {
     const { useYn } = filterDto;
 
-    //product엔티티 참조 createQueryBuilder 공부하기
     const query = this.createQueryBuilder('product');
     query.where({ store });
 
